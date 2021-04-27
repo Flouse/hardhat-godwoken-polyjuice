@@ -1,4 +1,4 @@
-# Hardhat Hackathon Boilerplate
+# **Happy _buidling_!**
 
 This repository contains some sample project that you can use as the starting point
 for your Ethereum project. It's also a great fit for learning the basics of
@@ -72,18 +72,5 @@ Your environment will have everything you need to build a Dapp powered by Hardha
 - [Waffle](https://github.com/EthWorks/Waffle/): To have Ethereum-specific Chai assertions/mathers.
 - [A sample frontend/Dapp](./frontend): A Dapp which uses [Create React App](https://github.com/facebook/create-react-app).
 
-## Troubleshooting
-
-- `Invalid nonce` errors: if you are seeing this error on the `npx hardhat node`
-  console, try resetting your Metamask account. This will reset the account's
-  transaction history and also the nonce. Open Metamask, click on your account
-  followed by `Settings > Advanced > Reset Account`.
-
-## Feedback, help and news
-
-We'd love to have your feedback on this tutorial. Feel free to reach us through
-this repository or [our Discord server](https://invite.gg/HardhatSupport).
-
-Also you can [follow us on Twitter](https://twitter.com/HardhatHQ).
-
-**Happy _buidling_!**
+## Special Thanks
+[Hardhat Hackathon Boilerplate](https://github.com/nomiclabs/hardhat-hackathon-boilerplate)
