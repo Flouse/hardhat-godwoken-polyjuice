@@ -5,8 +5,8 @@
 pragma solidity =0.5.16;
 
 // We import this library to be able to use console.log
-import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts-v2/token/ERC20/ERC20Detailed.sol";
+import "@openzeppelin/contracts-v2/token/ERC20/ERC20.sol";
 
 /// @title Token 1 = TK1
 contract Token1 is ERC20Detailed, ERC20 {
