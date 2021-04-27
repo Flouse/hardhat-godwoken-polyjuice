@@ -20,11 +20,14 @@ async function main() {
   await factory.deployed();
   console.log("UniswapV2Factory address:", factory.address);
 
-  // deploy token1 and token2 - contracts/uniswap/core/Token{1,2}.sol
-  let token1Address, token2Address;
+  
+  let token1Address, token2Address, wethAddress;
   if (network.name === "mainnet") {
     token1Address = ""; token2Addres = "";
+    // TODO: get WETH address on mainnet
+    // wethAddress = await WETH.at('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2');
   } else {
+    // deploy token1 and token2 - contracts/uniswap/core/Token{1,2}.sol
     const token1 = await ethers.getContractFactory("Token1")
       .then(contract => contract.deploy())
       .then(deployJob => deployJob.deployed())
@@ -35,10 +38,25 @@ async function main() {
       .then(deployJob => deployJob.deployed())
       .catch(e => console.error("Error occurred while deploying Token2", e));
     token2Address = token2.address;
+
+    // deploy WETH
+    const weth = await ethers.getContractFactory("WETH")
+      .then(contract => contract.deploy())
+      .then(deployJob => deployJob.deployed())
+      .catch(e => console.error("Error occurred while deploying Token2", e));
+    wethAddress = weth.address;
   }
+
   await factory.createPair(token1Address, token2Address);
 
-  // We also save the contract's artifacts and address in the frontend directory
+  // deploy router
+  await ethers.getContractFactory("UniswapV2Router02")
+    .then(contract => contract.deploy(factory.address, wethAddress)) 
+    .then(deployJob => deployJob.deployed())
+    .catch(e => console.error("Error occurred while deploying UniswapV2Router02", e));
+  
+    
+  // TODO: save the contract's artifacts and address in the frontend directory
   // saveFrontendFiles(factory);
 }
 

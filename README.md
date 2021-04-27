@@ -11,12 +11,10 @@ able to follow it by yourself by reading the README and exploring its
 
 ## Quick start
 
-The first things you need to do are cloning this repository and installing its
+The first things you need to installing its
 dependencies:
 
 ```sh
-git clone https://github.com/nomiclabs/hardhat-hackathon-boilerplate.git
-cd hardhat-hackathon-boilerplate
 npm install
 ```
 
@@ -30,9 +28,13 @@ Then, on a new terminal, go to the repository's root folder and run this to
 deploy your contract:
 
 ```sh
-npx hardhat run scripts/deploy.js --network localhost
+# deploy uniswap contracts to local blockchain
+npx hardhat run scripts/2_deploy_uniswap.js --network localhost
 ```
 
+----
+
+## TODO:
 Finally, we can run the frontend with:
 
 ```sh
@@ -49,7 +51,7 @@ Open [http://localhost:3000/](http://localhost:3000/) to see your Dapp. You will
 need to have [Metamask](https://metamask.io) installed and listening to
 `localhost 8545`.
 
-## User Guide
+## User Guide about Hardhat
 
 You can find detailed instructions on using this repository and many tips in [its documentation](https://hardhat.org/tutorial).
 
