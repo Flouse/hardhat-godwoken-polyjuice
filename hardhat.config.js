@@ -6,7 +6,19 @@ require("@nomiclabs/hardhat-waffle");
 require("./tasks/faucet");
 
 module.exports = {
-  solidity: "0.5.16",
+  // Support Multiple Solidity versions
+  // https://hardhat.org/guides/compile-contracts.html#multiple-solidity-versions
+  solidity: {
+    compilers: [
+      { // for uniswap-v2-core contracts
+        version: "0.5.16"
+      },
+      { // for uniswap-v2-periphery contracts
+        version: "0.6.6",
+        settings: {}
+      }
+    ]
+  },
   networks: {
     hardhat: {
       chainId: 1337   // https://hardhat.org/metamask-issue.html - MetaMask mistakenly assumes all networks in http://localhost:8545 to have a chain id of 1337
