@@ -30,8 +30,13 @@ deploy your contract:
 ```sh
 # compile the contracts
 npx hardhat compile
-# deploy uniswap contracts to local blockchain
+
+# deploy Uniswap contracts to local blockchain(Hardhat's testing network)
 npx hardhat run scripts/2_deploy_uniswap.js --network localhost
+
+# deploy Uniswap contracts to Kovan testnet
+cp .env.example .env # and then change PRIVATE_KEY and yourown INFURA_API_KEY
+npx hardhat run script/2_deploy_uniswap.js --network kovan
 ```
 
 ----
