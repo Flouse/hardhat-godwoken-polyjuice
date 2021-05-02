@@ -17,7 +17,7 @@ module.exports = {
       { // for uniswap-v2-periphery contracts
         version: "0.6.6",
         settings: {}
-      }
+      }, { version: "0.7.5" }
     ]
   },
   networks: {
