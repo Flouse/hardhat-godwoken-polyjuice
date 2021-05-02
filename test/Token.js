@@ -5,6 +5,7 @@
 
 // We import Chai to use its asserting functions here.
 const { expect } = require("chai");
+const { ethers } = require("hardhat");
 
 // `describe` is a Mocha function that allows you to organize your tests. It's
 // not actually needed, but having your tests organized makes debugging them
@@ -72,7 +73,7 @@ describe("Token contract", function () {
     it("Should transfer tokens between accounts", async function () {
       // Transfer 50 tokens from owner to addr1
       await hardhatToken.transfer(addr1.address, 50);
-      const addr1Balance = await hardhatToken.balanceOf(
+      let addr1Balance = await hardhatToken.balanceOf(
         addr1.address
       );
       expect(addr1Balance).to.equal(50);
@@ -84,6 +85,10 @@ describe("Token contract", function () {
         addr2.address
       );
       expect(addr2Balance).to.equal(50);
+      addr1Balance = await hardhatToken.balanceOf(
+        addr1.address
+      );
+      expect(addr1Balance).to.equal(0);
     });
 
     it("Should fail if sender doesn’t have enough tokens", async function () {
