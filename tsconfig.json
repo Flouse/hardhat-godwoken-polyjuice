@@ -1,0 +1,12 @@
+// https://hardhat.org/guides/typescript.html#customizing-typescript-with-a-tsconfig-json-file
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "dist"
+  },
+  "include": ["./scripts", "./test"],
+  "files": ["./hardhat.config.ts"]
+}
