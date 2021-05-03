@@ -67,7 +67,7 @@ export default {
       gasPrice: 20000000000,
       gasMultiplier: 2,
     },
-    polyjuice: {
+    polyjuice: { //TODO:
       url: "",
       accounts: [],
     }

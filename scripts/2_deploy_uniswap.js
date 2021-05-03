@@ -50,10 +50,13 @@ async function main() {
   await factory.createPair(token1Address, token2Address);
 
   // deploy router
-  await ethers.getContractFactory("UniswapV2Router02")
+  const router = await ethers.getContractFactory("UniswapV2Router02")
     .then(contract => contract.deploy(factory.address, wethAddress)) 
     .then(deployJob => deployJob.deployed())
     .catch(e => console.error("Error occurred while deploying UniswapV2Router02", e));
+
+  // deploy bonusToken
+  
   
     
   // TODO: save the contract's artifacts and address in the frontend directory
