@@ -1,0 +1,4 @@
+[submodule "packages/polyjuice-web3-http-provider"]
+	path = packages/polyjuice-web3-http-provider
+	url = https://github.com/RetricSu/polyjuice-providers-http
+	branch = to-web3-rpc
