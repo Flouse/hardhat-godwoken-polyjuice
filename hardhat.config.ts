@@ -1,12 +1,26 @@
 // This configuration file is always executed on startup before anything else happens.
-import dotenv from "dotenv";
-dotenv.config();
+import { config } from "dotenv";
+config();
+
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-web3";
-
+import { task, extendEnvironment } from "hardhat/config";
 // This task imports a Hardhat task definition, that can be used for testing the frontend.
 import "./tasks/faucet";
-import { task } from "hardhat/config";
+
+import { PolyjuiceProvider } from "./packages/godwoken-polyjuice/polyjuice-http-provider";
+import { Web3HTTPProviderAdapter } from "@nomiclabs/hardhat-web3/dist/src/web3-provider-adapter";
+// node_modules/@nomiclabs/hardhat-web3/src/web3-provider-adapter.ts
+
+extendEnvironment(hre => {
+  if (hre.network.name !== "godwoken-polyjuice") return;
+  console.log(hre.network);
+  const Web3 = require("web3");
+  hre.Web3 = Web3;
+  // hre.network.provider is an EIP1193-compatible provider.
+  const p = new PolyjuiceProvider(hre.network.provider);
+  hre.web3 = new Web3(new Web3HTTPProviderAdapter(p));
+});
 
 // task action function receives the Hardhat Runtime Environment as second argument
 task("accounts", "Prints accounts", async (_, { web3 }) => {
@@ -32,7 +46,7 @@ task("hello", "Prints 'Hello, World!' after a second", async (taskArguments, hre
     setTimeout(() => {
       console.log("World");
       resolve();
-    }, 1000);
+    }, 100);
   });
 });
 
@@ -67,9 +81,16 @@ export default {
       gasPrice: 20000000000,
       gasMultiplier: 2,
     },
-    polyjuice: { //TODO:
-      url: "",
-      accounts: [],
+    "godwoken-polyjuice": { //TODO:
+      url: process.env.GODWOKEN_RPC_URL || "http://localhost:8024",
+      accounts: [`0x${process.env.PRIVATE_KEY}`],
+      godwoken: {
+        rollup_type_hash: "0x58ebc6527e3cdbe220d235e9ba3bdf2dcdad52544e901994bc3e73f3e0a11fd7",
+        eth_account_lock: {
+          code_hash: "0x8a1dedd7b68b78a4f8d338b8aa756ed19f3ad4b442559a97720d9fe267c27cbc",
+          hash_type: "type"
+        }
+      }
     }
   }
 };
