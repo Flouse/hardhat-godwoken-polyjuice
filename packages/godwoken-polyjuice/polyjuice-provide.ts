@@ -1,21 +1,19 @@
-// import { BackwardsCompatibilityProviderAdapter} from "hardhat/internal/core/providers/backwards-compatibility";
-// import { HttpProvider } from "hardhat/internal/core/providers/http";
+import { BackwardsCompatibilityProviderAdapter} from "hardhat/internal/core/providers/backwards-compatibility";
 import { EIP1193Provider } from "hardhat/types/provider";
-import { HttpProvider } from "web3-providers-http/types/index";
 import { Godwoker, GodwokerOption } from "./util";
 
-export class PolyjuiceProvider extends HttpProvider {
-	private godwoker: Godwoker;
-
+export class PolyjuiceProvider extends BackwardsCompatibilityProviderAdapter {
 	connected: boolean;
 	// requestQueue: Map<string, any>;
 	// responseQueue: Map<string, any>;
 	// connection: any;
+	private provider: EIP1193Provider;
+	private godwoker: Godwoker;
 
+	constructor(_provider: EIP1193Provider) {
+		console.log("_provider:", _provider);
 
-	// private provider: EIP1193Provider;
-	constructor(private readonly provider: EIP1193Provider) {
-		super(process.env.GODWOKEN_RPC_URL || "http://localhost:8024");		
+		const godwoken_rpc_url = process.env.GODWOKEN_RPC_URL || "http://localhost:8024";
 		const provider_config: GodwokerOption = {
 			godwoken: {
 				rollup_type_hash: "0x58ebc6527e3cdbe220d235e9ba3bdf2dcdad52544e901994bc3e73f3e0a11fd7",
@@ -25,12 +23,11 @@ export class PolyjuiceProvider extends HttpProvider {
 				}
 			}
 		}
-		this.godwoker = new Godwoker(
-			process.env.GODWOKEN_RPC_URL || "http://localhost:8024", provider_config);
+		super(godwoken_rpc_url);
+		this.provider = _provider;
+		this.godwoker = new Godwoker(godwoken_rpc_url, provider_config);
 		this.connected = true;
-
-		console.log(this.provider);
-  }
+	}
 
 	public async send(payload, callback) {		
 		const { method, params } = payload;
@@ -122,6 +119,7 @@ export class PolyjuiceProvider extends HttpProvider {
 			default:
 				try {
 					console.log("default call");
+					
 					super.send(payload, callback);
 					break;
 				} catch (error) {
@@ -129,16 +127,8 @@ export class PolyjuiceProvider extends HttpProvider {
 					throw error;
 				}
 		}
-
-		
 	}
 
-	sendAsync(
-    payload: any,
-    callback: (error: any, response: any) => void
-  ): void {
-		throw new Error("Method not implemented.");
-	}
 	// isConnecting(): boolean {
 	// 	console.log('isConnecting:', this.connected);
 	// 	return this.connected;
@@ -158,4 +148,5 @@ export class PolyjuiceProvider extends HttpProvider {
 	// reconnect(): void {
 	// 	throw new Error("Not implemented");
 	// }
+
 }

@@ -48,6 +48,7 @@ function toArrayBuffer(buf) {
 
 class Godwoken {
   constructor(url) {
+    console.log('==========================init Godwoken', url);
     this.rpc = new RPC(url);
     this.utils = new GodwokenUtils();
   }

@@ -2,7 +2,7 @@
 import { config } from "dotenv";
 config();
 
-import "@nomiclabs/hardhat-waffle";
+// import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-web3";
 import { task, extendEnvironment } from "hardhat/config";
 // This task imports a Hardhat task definition, that can be used for testing the frontend.
@@ -10,17 +10,18 @@ import "./tasks/faucet";
 
 import { PolyjuiceProvider } from "./packages/godwoken-polyjuice/polyjuice-http-provider";
 import { Web3HTTPProviderAdapter } from "@nomiclabs/hardhat-web3/dist/src/web3-provider-adapter";
-// node_modules/@nomiclabs/hardhat-web3/src/web3-provider-adapter.ts
-
+// https://hardhat.org/advanced/hardhat-runtime-environment.html
 extendEnvironment(hre => {
   if (hre.network.name !== "godwoken-polyjuice") return;
-  console.log(hre.network);
+  console.log(hre.network.name);
   const Web3 = require("web3");
   hre.Web3 = Web3;
   // hre.network.provider is an EIP1193-compatible provider.
   const p = new PolyjuiceProvider(hre.network.provider);
-  hre.web3 = new Web3(new Web3HTTPProviderAdapter(p));
+  // hre.web3 = new Web3(new Web3HTTPProviderAdapter(p));
+  hre.web3 = new Web3(p);
 });
+
 
 // task action function receives the Hardhat Runtime Environment as second argument
 task("accounts", "Prints accounts", async (_, { web3 }) => {
