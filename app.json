@@ -1,6 +1,7 @@
 {
   "name": "nft backend",
   "description": "A simple Node.js app using Koa",
+  "stack": "container",
   "keywords": ["node", "koa", "nft", "dapp", "ethereum"],
 	"website": "https://www.youtube.com/watch?v=WsZyb2T83lo",
   "repository": "https://github.com/Flouse/hardhat-godwoken-polyjuice/tree/nft"
