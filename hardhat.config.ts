@@ -71,6 +71,13 @@ export default {
       // gasPrice: 8000000000,    // Its value should be "auto" or a number. This parameter behaves like gas. Default value: 8000000000
       chainId: 1337   // https://hardhat.org/metamask-issue.html - MetaMask mistakenly assumes all networks in http://localhost:8545 to have a chain id of 1337
     },
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`,
+      accounts: [`0x${process.env.PRIVATE_KEY}`],
+      chainId: 4,
+      live: true,
+      tags: ["staging"]
+    },
     kovan: {
       url: `https://kovan.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: [`0x${process.env.PRIVATE_KEY}`],
